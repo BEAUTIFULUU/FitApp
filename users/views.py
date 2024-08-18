@@ -23,7 +23,9 @@ class CustomUserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def update(self, request: Request, *args, **kwargs) -> Response:
         custom_user_obj = self.get_object()
-        serializer = self.get_serializer(instance=custom_user_obj, data=request.data, partial=True)
+        serializer = self.get_serializer(
+            instance=custom_user_obj, data=request.data, partial=True
+        )
         serializer.is_valid(raise_exception=True)
         update_custom_user_details(data=serializer.validated_data, user=custom_user_obj)
         output_serializer = CustomUserOutputSerializer(custom_user_obj)
