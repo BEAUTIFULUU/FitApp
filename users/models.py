@@ -2,23 +2,25 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
-from users.choices.activity_choices import ACTIVITY_CHOICES
+from .choices import ACTIVITY_CHOICES
 
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(default=uuid.uuid4(), primary_key=True)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)
     weight = models.DecimalField(
         max_digits=3,
         decimal_places=2,
         validators=[MinValueValidator(20), MaxValueValidator(800)],
+        null=True,
     )
     height = models.DecimalField(
         max_digits=3,
         decimal_places=0,
         validators=[MinValueValidator(100), MaxValueValidator(300)],
+        null=True,
     )
-    activity = models.CharField(choices=ACTIVITY_CHOICES)
+    activity = models.CharField(choices=ACTIVITY_CHOICES, null=True)
 
 
 class Summary(models.Model):
