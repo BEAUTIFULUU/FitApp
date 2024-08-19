@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from users.validators import validate_user_birth_date
 from users.choices import ACTIVITY_CHOICES
-from users.models import CustomUser
+from users.models import UserProfile
 from users.services import calculate_user_age
 
 
-class CustomUserInputSerializer(serializers.Serializer):
+class UserProfileInputSerializer(serializers.Serializer):
     name = serializers.CharField(min_length=1, max_length=60)
     surname = serializers.CharField(min_length=1, max_length=60)
     birth_date = serializers.DateField(validators=[validate_user_birth_date])
@@ -14,11 +14,11 @@ class CustomUserInputSerializer(serializers.Serializer):
     activity = serializers.ChoiceField(choices=ACTIVITY_CHOICES)
 
 
-class CustomUserOutputSerializer(serializers.ModelSerializer):
+class UserProfileOutputSerializer(serializers.ModelSerializer):
     age = serializers.SerializerMethodField(allow_null=True)
 
     class Meta:
-        model = CustomUser
+        model = UserProfile
         fields = [
             "name",
             "surname",
