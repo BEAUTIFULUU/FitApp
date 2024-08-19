@@ -1,11 +1,11 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 from users.choices import ACTIVITY_CHOICES
 
 
-class CustomUser(AbstractUser):
+class UserProfile(models.Model):
     id = models.UUIDField(default=uuid.uuid4(), primary_key=True)
     name = models.CharField(max_length=60, null=True)
     surname = models.CharField(max_length=60, null=True)
@@ -23,6 +23,7 @@ class CustomUser(AbstractUser):
         null=True,
     )
     activity = models.CharField(choices=ACTIVITY_CHOICES, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Summary(models.Model):
@@ -34,7 +35,7 @@ class Summary(models.Model):
     fats = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     fiber = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="summaries"
+        UserProfile, on_delete=models.CASCADE, related_name="summaries"
     )
 
     def __str__(self):

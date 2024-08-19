@@ -1,9 +1,6 @@
-import uuid
 from datetime import date
-
-from rest_framework.generics import get_object_or_404
-
-from users.models import CustomUser
+from django.contrib.auth.models import User
+from users.models import UserProfile
 
 
 def calculate_user_age(birth_date: date) -> int | None:
@@ -19,11 +16,14 @@ def calculate_user_age(birth_date: date) -> int | None:
     return age
 
 
-def get_custom_user_details(user_id: uuid.UUID) -> CustomUser:
-    return get_object_or_404(CustomUser, id=user_id)
+def get_or_create_user_profile(user: User) -> UserProfile:
+    profile, created = UserProfile.objects.get_or_create(user=user)
+    return profile
 
 
-def update_custom_user_details(data: dict[str, str | float], user: CustomUser) -> None:
+def update_custom_user_details(
+    data: dict[str, str | float], user_profile: UserProfile
+) -> None:
     for key, value in data.items():
-        setattr(user, key, value)
-    user.save()
+        setattr(user_profile, key, value)
+    user_profile.save()
