@@ -3,3 +3,9 @@ ACTIVITY_CHOICES = (
     ("2-4", "2-4 times a week"),
     ("5-7", "5-7 times a week"),
 )
+
+GOAL_CHOICES = (
+    ("Lose", "Lose weight"),
+    ("Maintain", "Maintain weight"),
+    ("Gain", "Gain weight"),
+)
