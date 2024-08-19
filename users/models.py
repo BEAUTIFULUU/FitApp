@@ -2,11 +2,11 @@ import uuid
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
-from users.choices import ACTIVITY_CHOICES
+from users.choices import ACTIVITY_CHOICES, GOAL_CHOICES
 
 
 class UserProfile(models.Model):
-    id = models.UUIDField(default=uuid.uuid4(), primary_key=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=60, null=True)
     surname = models.CharField(max_length=60, null=True)
     birth_date = models.DateField(null=True)
@@ -23,11 +23,12 @@ class UserProfile(models.Model):
         null=True,
     )
     activity = models.CharField(choices=ACTIVITY_CHOICES, null=True)
+    goal = models.CharField(choices=GOAL_CHOICES, default="Maintain", null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Summary(models.Model):
-    id = models.UUIDField(default=uuid.uuid4(), primary_key=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     date = models.DateField()
     calories = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     proteins = models.DecimalField(max_digits=3, decimal_places=2, null=True)
