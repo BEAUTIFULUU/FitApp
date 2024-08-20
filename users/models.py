@@ -38,6 +38,3 @@ class Summary(models.Model):
     user = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, related_name="summaries"
     )
-
-    def __str__(self):
-        return f"Summary on {self.date}"
