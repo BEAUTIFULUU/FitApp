@@ -21,7 +21,7 @@ def get_or_create_user_profile(user: User) -> UserProfile:
     return profile
 
 
-def update_custom_user_details(
+def update_user_profile_details(
     data: dict[str, str | float], user_profile: UserProfile
 ) -> None:
     for key, value in data.items():

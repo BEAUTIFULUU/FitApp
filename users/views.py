@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from users.serializers import UserProfileInputSerializer, UserProfileOutputSerializer
 from users.models import UserProfile
-from users.services import get_or_create_user_profile, update_custom_user_details
+from users.services import get_or_create_user_profile, update_user_profile_details
 
 
 class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -27,9 +27,8 @@ class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
             instance=custom_user_obj, data=request.data, partial=True
         )
         serializer.is_valid(raise_exception=True)
-        update_custom_user_details(
-            data=serializer.validated_data,
-            user_profile=custom_user_obj,
+        update_user_profile_details(
+            data=serializer.validated_data, user_profile=custom_user_obj
         )
         output_serializer = UserProfileOutputSerializer(custom_user_obj)
         return Response(output_serializer.data, status=status.HTTP_200_OK)
