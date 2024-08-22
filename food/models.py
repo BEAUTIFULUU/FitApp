@@ -38,6 +38,11 @@ class Product(models.Model):
 
 class Dish(models.Model):
     name = models.CharField(max_length=70, validators=[MinLengthValidator(3)])
+    image = models.ImageField(
+        upload_to="images/",
+        validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])],
+        null=True,
+    )
     description = models.TextField()
     preparation_time = models.DurationField()
     is_verified = models.BooleanField(default=False)
