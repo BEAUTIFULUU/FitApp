@@ -2,6 +2,8 @@ import uuid
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+
+from food.models import Product, Dish
 from users.choices import ACTIVITY_CHOICES, GOAL_CHOICES
 
 
@@ -38,3 +40,5 @@ class Summary(models.Model):
     user = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, related_name="summaries"
     )
+    products = models.ManyToManyField(Product, related_name='summaries')
+    dishes = models.ManyToManyField(Dish, related_name='summaries')
