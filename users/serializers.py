@@ -41,11 +41,11 @@ class UserProfileOutputSerializer(serializers.ModelSerializer):
             "goal",
         ]
 
-    def get_age(self, obj: UserProfile):
+    def get_age(self, obj: UserProfile) -> int:
         return calculate_user_age(birth_date=obj.birth_date)
 
-    def get_height(self, obj: UserProfile):
+    def get_height(self, obj: UserProfile) -> str:
         return f"{obj.height} cm"
 
-    def get_weight(self, obj: UserProfile):
+    def get_weight(self, obj: UserProfile) -> str:
         return f"{obj.weight} kg"
