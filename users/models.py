@@ -24,8 +24,8 @@ class UserProfile(models.Model):
         validators=[MinValueValidator(100), MaxValueValidator(300)],
         null=True,
     )
-    activity = models.CharField(choices=ACTIVITY_CHOICES, null=True)
-    goal = models.CharField(choices=GOAL_CHOICES, default="Maintain", null=True)
+    activity = models.CharField(choices=ACTIVITY_CHOICES, max_length=50, null=True)
+    goal = models.CharField(choices=GOAL_CHOICES, default="Maintain", max_length=50, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
@@ -33,12 +33,13 @@ class Summary(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     date = models.DateField()
     calories = models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    proteins = models.DecimalField(max_digits=3, decimal_places=2, null=True)
-    carbohydrates = models.DecimalField(max_digits=3, decimal_places=2, null=True)
-    fats = models.DecimalField(max_digits=3, decimal_places=2, null=True)
-    fiber = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    proteins = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    carbohydrates = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    fats = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    fiber = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     user = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, related_name="summaries"
     )
     products = models.ManyToManyField(Product, related_name="summaries")
     dishes = models.ManyToManyField(Dish, related_name="summaries")
+
