@@ -49,6 +49,6 @@ def validate_image_size(uploaded_image: InMemoryUploadedFile) -> Image:
         )
 
 
-def validate_user_photo(uploaded_image: InMemoryUploadedFile) -> None:
+def validate_image(uploaded_image: InMemoryUploadedFile) -> None:
     validate_image_format(uploaded_image=uploaded_image)
     validate_image_size(uploaded_image=uploaded_image)
