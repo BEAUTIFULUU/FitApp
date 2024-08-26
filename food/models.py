@@ -10,15 +10,15 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(max_length=50, validators=[MinLengthValidator(2)])
     image = models.ImageField(
-        upload_to="images/",
+        upload_to="product_images/",
         validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])],
         null=True,
     )
-    calories_per_100g = models.DecimalField(max_digits=5, decimal_places=2)
-    proteins = models.DecimalField(max_digits=5, decimal_places=2)
-    carbohydrates = models.DecimalField(max_digits=5, decimal_places=2)
-    fats = models.DecimalField(max_digits=5, decimal_places=2)
-    fiber = models.DecimalField(max_digits=5, decimal_places=2)
+    calories_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
+    proteins_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
+    carbohydrates_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
+    fats_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
+    fiber_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
     is_vegetarian = models.BooleanField(default=False)
     is_vegan = models.BooleanField(default=False)
     is_keto_friendly = models.BooleanField(default=False)
@@ -31,9 +31,6 @@ class Product(models.Model):
     is_low_sugar = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     added_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
-    quantity = models.DecimalField(
-        max_digits=6, decimal_places=2, validators=[MinValueValidator(1)]
-    )
 
 
 class Dish(models.Model):
