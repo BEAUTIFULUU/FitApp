@@ -1,21 +1,15 @@
 from django.contrib.auth.models import User
 from django.core.validators import (
     MinLengthValidator,
-    FileExtensionValidator,
-    MinValueValidator,
 )
 from django.db import models
 
 
 class Product(models.Model):
     name = models.CharField(max_length=50, validators=[MinLengthValidator(2)])
-    image = models.ImageField(
-        upload_to="product_images/",
-        validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])],
-        null=True,
-    )
     calories_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
     proteins_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
+    sugar_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
     carbohydrates_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
     fats_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
     fiber_per_100_g = models.DecimalField(max_digits=5, decimal_places=2)
@@ -35,13 +29,8 @@ class Product(models.Model):
 
 class Dish(models.Model):
     name = models.CharField(max_length=70, validators=[MinLengthValidator(3)])
-    image = models.ImageField(
-        upload_to="images/",
-        validators=[FileExtensionValidator(allowed_extensions=["jpg", "png"])],
-        null=True,
-    )
-    description = models.TextField()
+    description = models.TextField(max_length=700)
     preparation_time = models.DurationField()
     is_verified = models.BooleanField(default=False)
     added_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
-    products = models.ManyToManyField(Product, related_name="dishes")
+    products = models.ManyToManyField(Product, related_name="dishes", null=True)
